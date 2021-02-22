@@ -12,12 +12,10 @@
 
 <?php
 
-
 function sign_in(){
 
-
     try{
-        $bdd = new PDO('mysql:host=localhost;dbname=rpg', 'root', '');
+        $bdd = new PDO('mysql:host=localhost;dbname=rpg', 'root', ''); //co à la bdd
     }
 
     catch(Exception $e)
@@ -25,21 +23,58 @@ function sign_in(){
             die('Erreur : '.$e->getMessage());
     }
 
-    $data = [
+    $data = [ // récup des datas
         'pseudo' => $_POST['pseudo'],
         'mdp' => $_POST['mdp'],
     ];
 
-    $sql = "INSERT INTO connexion(pseudo, mdp) 
+    //préparation requête
+    $sql = "INSERT INTO connexion(pseudo, mdp)
             VALUES (:pseudo ,MD5(:mdp))";
 
+    //exécution requête
     $bdd->prepare($sql)->execute($data);
+    header('Location: menu_main.php'); //redirection
 }
 
+function verification(){ //vérifie les doublons
+
+    try{
+        $bdd = new PDO('mysql:host=localhost;dbname=rpg', 'root', ''); //co à la bdd
+    }
+
+    catch(Exception $e)
+    {
+            die('Erreur : '.$e->getMessage());
+    }
+
+// lancement de la requête
+    $reponse = $bdd->query('SELECT pseudo, mdp
+                            FROM connexion');
+    
+    //comparaison
+    $here = FALSE;
+    while ($pseudo = $reponse->fetch()) {
+        
+        if ($pseudo['pseudo'] == $_POST['pseudo'] && $pseudo['mdp'] == MD5($_POST['mdp'])) {
+            $here = TRUE;
+        }
+
+    }
+
+    if ($here == TRUE){
+        echo "<script> alert ('Veuillez réessayer, vous êtes déjà présent') </script>"; // redirection
+    }
+    else{
+        sign_in(); // si erreur
+    }
+}
+
+
+//vérif des datas
 if (isset($_POST['pseudo']) && isset($_POST['mdp'])) {
-    sign_in();
+    verification();
 }
-
 ?>
 
     <form method="post">
