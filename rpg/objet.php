@@ -1,4 +1,34 @@
 <?php
+
+
+/* COMMENTAIRE EXPLICATIF : on hydratera les classes via d'autres fichiers ?
+
+constructeur pas obliger ==> grâce à la def des attributs et des setters, on a juste besoin d'une fonction !
+
+A AJOUTER :
+
+(oui, php en commentaire, et alors ?)
+
+function hydrate(){
+
+    foreach ($infos as $clef => $donnee){
+
+        $methode = 'set'.$clef;  // permet d'appeller un setteur de la clef (on pourra donc boucler avec les données)
+
+        if (method_exists($this, $methode))
+                {
+                    // On appelle le setter avec la données
+                    $this->$methode($donnee); 
+                }
+    }
+} 
+MAIS il faut trouver comment faire communiquer ces classes avec un autre fichier php (opour plus de simpliciter du coup)
+*/
+
+
+
+
+/*
 // CONNECTION A LA BASE DE DONNEES
 $user = "root";
 $pass = "";
@@ -33,7 +63,7 @@ try{
 };
 
 
-
+*/
 
 
 

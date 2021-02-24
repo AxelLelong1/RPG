@@ -25,27 +25,26 @@ function login(){ //fonction de login
             die('Erreur : '.$e->getMessage());
     }
 
-    $data = [ //récup des données
-        'pseudo' => $_POST['pseudo'],
-        'mdp' => $_POST['mdp'],
-    ];
-
     // lancement de la requête
+
     $reponse = $bdd->query('SELECT pseudo, mdp
-                            FROM connexion');
-    
+                            FROM connexion
+                            WHERE pseudo ="'.$_POST['pseudo'].'" AND mdp = MD5("'.$_POST['mdp'].'")');
+
+
+
     //comparaison
     $here = FALSE; //est là ? (défault = Nope)
-    while ($pseudo = $reponse->fetch()) {
+
+    $pseudo = $reponse->fetch();
         
         if ($pseudo['pseudo'] == $_POST['pseudo'] && $pseudo['mdp'] == MD5($_POST['mdp'])) {
 
             $here = TRUE; // oui, je suis là
-
-            
         }
 
-    }
+
+    
 
     if ($here == TRUE){
 
@@ -55,23 +54,19 @@ function login(){ //fonction de login
 
 		$_SESSION['mdp'] = $_POST['mdp']; // ainsi que le mot de passe
 
-        //tentative de récup l'id du joueur
-        $sql = 'SELECT id
-        FROM connexion
-        WHERE pseudo = "$_POST["pseudo"]" AND mdp = "MD5($_POST["mdp"])" ';
+        //tentative de récup l'id du joueu
 
-        // gros fail
-        $result = $bdd->query($sql);
+        $result = $bdd->query('SELECT id
+                                FROM connexion
+                                WHERE pseudo ="'.$_POST['pseudo'].'" AND mdp = MD5("'.$_POST['mdp'].'")');
 
         while($row = $result->fetch()) {
-            echo "id: " . $row["id"]. " - Name: " . $row["firstname"]. " " . $row["lastname"]. "<br>";
+            $id = $row["id"];
           }
 
-        echo $id;
-
-        $_SESSION['id'] = $id; //récup if == fail
+        $_SESSION['id'] = $id;
         
-        //header('Location: menu_main.php'); // redirection
+        header('Location: menu_main.php'); // redirection
     }
     else{
         echo "<script> alert ('Veuillez réessayer') </script>"; // si erreur

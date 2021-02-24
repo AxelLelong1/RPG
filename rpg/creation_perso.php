@@ -12,6 +12,16 @@
 
     <?php
 
+    session_start(); // LES SESSIONS ! (petit cours)
+
+    if (isset($_SESSION['pseudo']) && isset($_SESSION['mdp']) && isset($_SESSION['id'])) {
+
+        if (isset($_POST['nom']) && isset($_POST['hp']) && isset($_POST['mana']) && isset($_POST['att']) && isset($_POST['def']) ) {
+
+            verif();
+        }
+    }
+
     function creer_perso(){
 
         try{
@@ -21,29 +31,39 @@
         catch(Exception $e){
                 die('Erreur : '.$e->getMessage());
         }
-    
-        $req = $bdd->prepare("INSERT INTO heros(nom, hp, mana, att_base, def_base, xp, lvl, att_pts, def_pts)");
-        $req->execute(array(
 
-            'nom' => $_POST['nom'],
-            'hp' => $_POST['hp'],
-            'mana' => $_POST['mana'],
-            'att_base' => $_POST['att'],
-            'att_def' => $_POST['def'],
-            'xp' => 0,
-            'lvl' => 1,
-            'att_pts' => 0,
-            'def_pts' => 0
+        //def des attributs qui seront ajouter
 
-        )); //éxecution
+        $idpseudo = $_SESSION['id'];
+        $nom = $_POST['nom'];
+        $hp = $_POST['hp'];
+        $mana = $_POST['mana'];
+        $att_base = $_POST['att'];
+        $def_base = $_POST['def'];
+        $xp = 0;
+        $lvl = 1;
+        $att_pts = 0;
+        $def_pts = 0;
+
+        //requête
+
+        $sql = "INSERT INTO heros(id_pseudo, nom, hp, mana, att_base, def_base, xp, lvl, att_pts, def_pts)
+                VALUES('".$idpseudo."','".$nom."','".$hp."','".$mana."','".$att_pts."','".$def_base."','".$xp."','".$lvl."','".$att_pts."','".$def_pts."')";
+
+
+        //préparation puis execution (execution seule marche pas, obligation de préparer)
+        $stmt = $bdd -> prepare($sql);
+        $stmt->execute();
         
-        echo "Done";
+        header('Location: menu_main.php'); // redirection
 
 
     }
 
     function verif(){
 
+
+        //vérification des 200 points attribuer
         if ($_POST['hp'] + $_POST['mana'] + $_POST['att'] + $_POST['def'] != 200){
             echo '<script>alert("vous avez 200 points à attribuer !")</script>';
         }
@@ -54,10 +74,6 @@
 
 
 
-    }
-
-    if (isset($_POST['nom']) && isset($_POST['hp']) && isset($_POST['mana']) && isset($_POST['att']) && isset($_POST['def']) ) {
-        verif();
     }
 
     ?>

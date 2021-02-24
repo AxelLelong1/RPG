@@ -50,13 +50,15 @@ function verification(){ //vérifie les doublons
 
 // lancement de la requête
     $reponse = $bdd->query('SELECT pseudo, mdp
-                            FROM connexion');
+                            FROM connexion
+                            WHERE pseudo ="'.$_POST['pseudo'].'" AND mdp = MD5("'.$_POST['mdp'].'")');
     
     //comparaison
     $here = FALSE;
+
     while ($pseudo = $reponse->fetch()) {
         
-        if ($pseudo['pseudo'] == $_POST['pseudo'] && $pseudo['mdp'] == MD5($_POST['mdp'])) {
+        if ($pseudo['pseudo'] == $_POST['pseudo'] or $pseudo['mdp'] == MD5($_POST['mdp'])) {
             $here = TRUE;
         }
 
