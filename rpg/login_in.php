@@ -54,7 +54,7 @@ function login(){ //fonction de login
 
 		$_SESSION['mdp'] = $_POST['mdp']; // ainsi que le mot de passe
 
-        //tentative de récup l'id du joueu
+        //tentative de récup l'id du joueur
 
         $result = $bdd->query('SELECT id
                                 FROM connexion

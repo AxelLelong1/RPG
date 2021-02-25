@@ -33,11 +33,14 @@
             
 
             echo "<table>";
+            $i = 0;
 
             while($perso = $reponse->fetch()){
 
+                $i = $i+1;
+
                 //boucle pour tableau
-                echo '<tr><td>'.$perso["nom"].'</tr></td>';
+                echo '<tr><td><a href="test_hydratation.php?link = '.$i.'">'.$perso["nom"].'</a></tr></td>';
             }
 
             echo "</table>";

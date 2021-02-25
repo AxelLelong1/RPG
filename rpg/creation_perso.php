@@ -48,10 +48,18 @@
         //requête
 
         $sql = "INSERT INTO heros(id_pseudo, nom, hp, mana, att_base, def_base, xp, lvl, att_pts, def_pts)
-                VALUES('".$idpseudo."','".$nom."','".$hp."','".$mana."','".$att_pts."','".$def_base."','".$xp."','".$lvl."','".$att_pts."','".$def_pts."')";
+                VALUES('".$idpseudo."','".$nom."','".$hp."','".$mana."','".$att_base."','".$def_base."','".$xp."','".$lvl."','".$att_pts."','".$def_pts."')";
 
 
         //préparation puis execution (execution seule marche pas, obligation de préparer)
+        $stmt = $bdd -> prepare($sql);
+        $stmt->execute();
+
+        $sql = "INSERT INTO inventaire(id_heros)
+                    SELECT heros.id_heros
+                    FROM heros
+                    WHERE id_pseudo = ".$idpseudo." AND nom = '".$nom."'";
+        
         $stmt = $bdd -> prepare($sql);
         $stmt->execute();
         
