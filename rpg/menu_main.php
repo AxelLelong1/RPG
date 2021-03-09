@@ -22,8 +22,8 @@
                 die('Erreur : '.$e->getMessage());
         }
         
-        // récup des perso
-        $reponse = $bdd->query('SELECT heros.nom
+        // récup des perso-+
+        $reponse = $bdd->query('SELECT heros.nom, heros.id_heros
         FROM heros
         INNER JOIN connexion
         ON heros.id_pseudo = connexion.id
@@ -40,7 +40,7 @@
                 $i = $i+1;
 
                 //boucle pour tableau
-                echo '<tr><td><a href="test_hydratation.php?link = '.$i.'">'.$perso["nom"].'</a></tr></td>';
+                echo '<tr><td><a href="test_hydratation.php?link='.$perso["id_heros"].'">'.$perso["nom"].'</a></tr></td>';
             }
 
             echo "</table>";
@@ -67,10 +67,10 @@
 
     }
 
-    else{ // sinon
+    else{
 
-        echo '<a href="login_in.php"> login </a>' ; // proposition de login / sign_in
-        echo '<a href="sign_in.php"> sign_in </a>' ; // (les liens ne fonctionnent pas...)
+        echo '<a href="login_in.php"> login </a>' ;
+        echo '<a href="sign_in.php"> sign_in </a>' ; 
     }   
     ?>
 

@@ -51,24 +51,24 @@ function verification(){ //vérifie les doublons
 // lancement de la requête
     $reponse = $bdd->query('SELECT pseudo, mdp
                             FROM connexion
-                            WHERE pseudo ="'.$_POST['pseudo'].'" AND mdp = MD5("'.$_POST['mdp'].'")');
+                            WHERE pseudo ="'.$_POST['pseudo'].'"');
     
     //comparaison
     $here = FALSE;
 
     while ($pseudo = $reponse->fetch()) {
         
-        if ($pseudo['pseudo'] == $_POST['pseudo'] or $pseudo['mdp'] == MD5($_POST['mdp'])) {
+        if ($pseudo['pseudo'] == $_POST['pseudo']) {
             $here = TRUE;
         }
 
     }
 
     if ($here == TRUE){
-        echo "<script> alert ('Veuillez réessayer, vous êtes déjà présent') </script>"; // redirection
+        echo "<script> alert ('Veuillez réessayer, vous êtes déjà présent') </script>"; // erreur, on doit choisir un autre pseudo
     }
     else{
-        sign_in(); // si erreur
+        sign_in(); //si pas d'erreur
     }
 }
 

@@ -11,18 +11,11 @@
 
     <?php
 
-        if( $_GET['link']=='1' ){
-            echo "You Selected Link 1!";
-        }
+    session_start();
 
-        if( $_GET['link']=='2' ){
-            echo "You Selected Link 2!";
-        }
+        echo $_GET['link']; 
+        $_SESSION['id_pseudo'] = $_GET['link'];
     ?>
-
-    
-    
-
 
 	</body>
 
