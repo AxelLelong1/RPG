@@ -29,9 +29,6 @@
         ON heros.id_pseudo = connexion.id
         WHERE id_pseudo = '.$_SESSION["id"].'');
 
-        
-            
-
             echo "<table>";
             $i = 0;
 
@@ -40,7 +37,7 @@
                 $i = $i+1;
 
                 //boucle pour tableau
-                echo '<tr><td><a href="test_hydratation.php?link='.$perso["id_heros"].'">'.$perso["nom"].'</a></tr></td>';
+                echo '<tr><td><a href="jeu_test.php?link='.$perso["id_heros"].'">'.$perso["nom"].'</a></tr></td>';
             }
 
             echo "</table>";
@@ -69,8 +66,8 @@
 
     else{
 
-        echo '<a href="login_in.php"> login </a>' ;
-        echo '<a href="sign_in.php"> sign_in </a>' ; 
+        echo '<a href="login_in.php"> <input type="button" value="Log In"> </a>';
+        echo '<a href="sign_in.php"> <input type="button" value="sign_in"> </a>'; 
     }   
     ?>
 

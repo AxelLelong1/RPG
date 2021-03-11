@@ -84,21 +84,28 @@ class heros{
     private $_arme_principale;
 
     // Lors de la construction d'un perso les stats seront celles de base, le joueur ne pourra que choisir son pseudo 
-    function __construct($nom,$xp,$hp,$lvl,$mana,$att_base,$att_pts,$def_base,$def_pts){
-        if (is_string($nom) && strlen($nom) <= 30)
+    function __construct(array $donnees)
+    {
+    if (!empty($donnees)) // Si on a spécifié des valeurs, alors on hydrate l'objet.
         {
-            $this->_nom = $nom;
-        }
-        $this->_xp = $xp;
-        $this->_hp = $hp;
-        $this->_lvl = $lvl;
-        $this->_mana = $mana;
-        $this->_att_base = $att_base;
-        $this->_att_pts = $att_pts;
-        $this->_def_base = $def_base;
-        $this->_def_pts = $def_pts;
+          $this->hydrate($donnees);
+        } 
 
     }
+
+    function hydrate(array $infos){
+
+        foreach ($infos as $clef => $donnee){
+    
+            $methode = 'set'.$clef;  // permet d'appeller un setteur de la clef (on pourra donc boucler avec les données)
+    
+            if (method_exists($this, $methode))
+                    {
+                        // On appelle le setter avec la données
+                        $this->$methode($donnee); 
+                    }
+        }
+    } 
 
     
     
@@ -137,17 +144,21 @@ class heros{
     }
     
     // FONCTIONS "SET"
-    public function setXP($gain_xp){
+    public function setnom($nom){
+        $this->_nom = $nom;
+    }
+
+    public function setxp($gain_xp){
         $this->_xp += $gain_xp;
     }
 
     // Permetra de modifier si le joueur ce fait attaquer ou s il se soigne par exemple
-    public function setHP($gain_hp){ 
+    public function sethp($gain_hp){ 
         $this->_hp += $gain_hp;
     }
 
     // Permettra d augmenter le niveau du joueur 
-    public function setLVL(){ 
+    public function setlvl(){ 
         if ($this->_xp >= 1000){
             // Augmente le niveau du personnage de 1
             $this->_lvl += 1;
@@ -158,28 +169,28 @@ class heros{
     }
 
     // Augmentera ou diminuera suivant le mana utiliser ou gagner
-    public function setMana($gain_mana){ 
+    public function setmana($gain_mana){ 
         $this->_mana += $gain_mana;
     }
 
     // Dépendra du niveau du personnage 
-    public function setAttBase($gain_att){
+    public function setatt_base($gain_att){
         $this->_att_base += $gain_att;
     }
 
     // Dépendra suivant ce que l'arme apportera comme degats
-    public function setAttPts($gain_pts_att){ 
-        $this->_att_pts = $_att_base + $gain_pts_att;
+    public function setatt_pts($gain_pts_att){ 
+        $this->_att_pts = $this->getAttBase()+ $gain_pts_att;
     }
 
     // Dépendra du niveau du personnage 
-    public function setDefBase($gain_def){ 
+    public function setdef_base($gain_def){ 
         $this->_def_base += $gain_def;
     }
 
     // Dépendra suivant ce que l'armure apportera comme defense
-    public function setDefPts($gain_pts_def){ 
-        $this->_def_pts = $_def_base + $gain_pts_def;
+    public function setdef_pts($gain_pts_def){ 
+        $this->_def_pts = $this->getDefBase() + $gain_pts_def;
     }
 
 
@@ -222,7 +233,7 @@ class ennemi{
     private $_drop_g;
     private $_drop_xp;
 
-    function __construct($nom,$hp,$mana,$att_pts,$def_pts,$min_drop_gold,$max_drop_gold,$min_drop_xp,$max_drop_xp,){
+    function __construct($nom,$hp,$mana,$att_pts,$def_pts,$min_drop_gold,$max_drop_gold,$min_drop_xp,$max_drop_xp){
         $this->_nom = $nom;
         $this->_hp = $hp;
         $this->_mana = $mana;

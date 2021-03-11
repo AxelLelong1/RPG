@@ -49,20 +49,20 @@ function verification(){ //vérifie les doublons
     }
 
 // lancement de la requête
-    $reponse = $bdd->query('SELECT pseudo, mdp
+    $reponse = $bdd->query('SELECT pseudo
                             FROM connexion
                             WHERE pseudo ="'.$_POST['pseudo'].'"');
     
     //comparaison
     $here = FALSE;
 
-    while ($pseudo = $reponse->fetch()) {
+    $pseudo = $reponse->fetch();
         
-        if ($pseudo['pseudo'] == $_POST['pseudo']) {
+        if (in_array($_POST['pseudo'], $pseudo, true) == true ) {
             $here = TRUE;
         }
 
-    }
+    
 
     if ($here == TRUE){
         echo "<script> alert ('Veuillez réessayer, vous êtes déjà présent') </script>"; // erreur, on doit choisir un autre pseudo
