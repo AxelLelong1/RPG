@@ -36,12 +36,14 @@ function login(){ //fonction de login
     //comparaison
     $here = FALSE; //est là ? (défault = Nope)
 
-    $pseudo = $reponse->fetch();
-        
-        if ($pseudo['pseudo'] == $_POST['pseudo'] && $pseudo['mdp'] == MD5($_POST['mdp'])) {
+    $pseudo = $reponse->fetch(); // Récupère les valeurs de la bdd ligne par ligne
 
-            $here = TRUE; // oui, je suis là
-        }
+    ini_set('display_errors','off'); // Enlève l'erreur disant que "Les identifiants forcent avec la condition (ci-dessous)"
+
+    if ($pseudo['pseudo'] == $_POST['pseudo'] && $pseudo['mdp'] == MD5($_POST['mdp'])) {
+
+        $here = TRUE; // oui, je suis là
+    }
 
 
     
@@ -80,9 +82,9 @@ if (isset($_POST['pseudo']) && isset($_POST['mdp'])) { //vérif des datas
 ?>
 
     <form method="post">
-        <p>Votre Pseudo : <input type="text" name="pseudo" /></p>
-        <p>Votre Mot_de_passe : <input type="text" name="mdp" /></p>
-        <p><input type="submit" value="Login In"></p>
+        <p class="text_formualire">Votre Pseudo : <input type="text" name="pseudo" /></p>
+        <p class="text_formualire">Votre Mot de passe : <input type="text" name="mdp" /></p>
+        <p><input class="bouton" type="submit" value="Login In"></p>
     </form>
 
 

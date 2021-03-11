@@ -1,5 +1,30 @@
 canvas {
-
     border: 1px solid black;
-    background: #77f;
+}
+
+.text_formualire{
+    font-family: 'Courier New', Courier, monospace;
+    letter-spacing: 0.5px;
+}
+
+.lien{
+    text-decoration: none;
+}
+
+.bouton{
+    margin: 10px 10px 10px 10px;
+    padding: 10px 10px 10px 10px;
+    border: 0;
+    border-color: none;
+    border-radius: 12px;
+    font-family: 'Courier New', Courier, monospace;
+    color: white;
+    font-size: 16px;
+    background-color: rgb(1, 153, 153);
+    opacity: 0.6;
+    transition: 1s;
+}
+
+.bouton:hover{
+    opacity: 1;
 }
