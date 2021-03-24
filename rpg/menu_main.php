@@ -41,7 +41,7 @@
                 $i = $i+1;
 
                 //boucle pour tableau
-                echo '<tr><td><a href="test_hydratation.php?link = '.$i.'">'.$perso["nom"].'</a></tr></td>';
+                echo '<tr><td><a href="jeu_test.php?link='.$i.'">'.$perso["nom"].'</a></tr></td>';
             }
 
             echo "</table>";

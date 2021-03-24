@@ -11,7 +11,7 @@
 
     <?php   
 
-        include("objet.php");
+        include("objet\heros.php");
 
         session_start();
 
@@ -37,7 +37,7 @@
 
         echo "hydratation done";
         echo $heros->getName();
-        echo " __ ", $heros->getHP();
+        echo " __ ", $heros->getHP(),;
         echo " __ ", $heros->getAttPts();
 
     ?>

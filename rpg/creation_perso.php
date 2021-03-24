@@ -63,7 +63,7 @@
         $stmt = $bdd -> prepare($sql);
         $stmt->execute();
         
-        header('Location: menu_main.php'); // redirection
+        header('Location:menu_main.php'); // redirection
 
 
     }
