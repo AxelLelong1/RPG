@@ -24,24 +24,18 @@
         }
         
         // récup des perso
-        $reponse = $bdd->query('SELECT heros.nom
+        $reponse = $bdd->query('SELECT heros.nom, id_heros
         FROM heros
         INNER JOIN connexion
         ON heros.id_pseudo = connexion.id
-        WHERE id_pseudo = '.$_SESSION["id"].'');
-
-        
-            
+        WHERE id_pseudo = '.$_SESSION["id"].'');            
 
             echo "<table>";
-            $i = 0;
 
             while($perso = $reponse->fetch()){
 
-                $i = $i+1;
-
                 //boucle pour tableau
-                echo '<tr><td><a href="jeu_test.php?link='.$i.'">'.$perso["nom"].'</a></tr></td>';
+                echo '<tr><td><a href="jeu_test.php?link='.urlencode($perso["id_heros"]).'">'.$perso["nom"].'</a></tr></td>';
             }
 
             echo "</table>";

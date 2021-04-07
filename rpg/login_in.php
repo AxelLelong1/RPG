@@ -29,7 +29,7 @@ function login(){ //fonction de login
 
     $reponse = $bdd->query('SELECT pseudo, mdp
                             FROM connexion
-                            WHERE pseudo ="'.$_POST['pseudo'].'" AND mdp = MD5("'.$_POST['mdp'].'")');
+                            WHERE pseudo ="'.$_POST['pseudo'].'" AND mdp = SHA1("'.$_POST['mdp'].'")');
 
 
 
@@ -40,7 +40,7 @@ function login(){ //fonction de login
 
     ini_set('display_errors','off'); // Enlève l'erreur disant que "Les identifiants forcent avec la condition (ci-dessous)"
 
-    if ($pseudo['pseudo'] == $_POST['pseudo'] && $pseudo['mdp'] == MD5($_POST['mdp'])) {
+    if ($pseudo['pseudo'] == $_POST['pseudo'] && $pseudo['mdp'] == SHA1($_POST['mdp'])) {
 
         $here = TRUE; // oui, je suis là
     }
@@ -60,7 +60,7 @@ function login(){ //fonction de login
 
         $result = $bdd->query('SELECT id
                                 FROM connexion
-                                WHERE pseudo ="'.$_POST['pseudo'].'" AND mdp = MD5("'.$_POST['mdp'].'")');
+                                WHERE pseudo ="'.$_POST['pseudo'].'" AND mdp = SHA1("'.$_POST['mdp'].'")');
 
         while($row = $result->fetch()) {
             $id = $row["id"];

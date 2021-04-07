@@ -1,4 +1,76 @@
 <?php
+
+
+/* COMMENTAIRE EXPLICATIF : on hydratera les classes via d'autres fichiers ?
+
+constructeur pas obliger ==> grâce à la def des attributs et des setters, on a juste besoin d'une fonction !
+
+A AJOUTER :
+
+(oui, php en commentaire, et alors ?)
+
+function hydrate(){
+
+    foreach ($infos as $clef => $donnee){
+
+        $methode = 'set'.$clef;  // permet d'appeller un setteur de la clef (on pourra donc boucler avec les données)
+
+        if (method_exists($this, $methode))
+                {
+                    // On appelle le setter avec la données
+                    $this->$methode($donnee); 
+                }
+    }
+} 
+MAIS il faut trouver comment faire communiquer ces classes avec un autre fichier php (opour plus de simpliciter du coup)
+*/
+
+
+
+
+/*
+// CONNECTION A LA BASE DE DONNEES
+$user = "root";
+$pass = "";
+
+// Il faut mettre une variable permettant de récupérer les infos du joueur, pour prendre les infos de son personnage
+
+try{
+  $dbh = new PDO('mysql:host=localhost; dbname=rpg', $user, $pass);
+  echo "Connection réussie à la base de données RPG.";
+  
+  $reponse_heros = $dbh->query('SELECT heros.nom AS nom, heros.xp AS xp, heros.lvl AS lvl, heros.hp AS hp, heros.mana AS mana, heros.att_base AS attaque_de_base, heros.att_pts AS points_attaque, heros.def_base AS defense_de_base, heros.def_pts AS points_defense
+                        FROM heros
+                        WHERE id = 1;');
+  $heros = $reponse_heros->fetch();
+
+  $reponse_ennemi = $dbh->query('SELECT ennemi.nom AS nom, ennemi.hp AS hp, ennemi.mana AS mana, ennemi.att_pts AS points_attaque, ennemi.def_pts AS points_defense, ennemi.min_drop_gold AS min_drop_gold, ennemi.max_drop_gold AS max_drop_gold, ennemi.min_drop_xp AS min_drop_xp, ennemi.max_drop_xp AS max_drop_xp
+                        FROM ennemi
+                        WHERE id_ennemi = 1;');
+  $ennemi = $reponse_ennemi->fetch();
+
+// ---------------- MAIN ---------------- 
+
+    // Creation des personnages 
+    $p1 = new heros($heros['nom'], $heros['xp'],$heros['lvl'],$heros['hp'],$heros['mana'],$heros['attaque_de_base'],$heros['points_attaque'],$heros['defense_de_base'],$heros['points_defense']);
+    $e1 = new ennemi($ennemi['nom'], $ennemi['hp'],$ennemi['mana'],$ennemi['points_attaque'],$ennemi['points_defense'],$ennemi['min_drop_gold'],$ennemi['max_drop_gold'],$ennemi['min_drop_xp'],$ennemi['max_drop_xp']);
+
+    $p1->attaquer($e1);
+
+
+}catch(PDOException $e){
+  echo "Erreur : ". $e->getMessage()."<br>";
+};
+
+
+*/
+
+
+
+
+
+
+// CLASSE HEROS
 class heros{
     private $_nom;
     private $_xp;

@@ -26,7 +26,9 @@ CREATE TABLE IF NOT EXISTS`heros`(
     att_base int(11),
     att_pts int(11),
     def_base int(11),
-    def_pts int(11)
+    def_pts int(11),
+    nombre_de_des int(11) DEFAULT 1,
+    nombre_de_faces int(11) DEFAULT 50
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
   
 --
@@ -77,20 +79,10 @@ CREATE TABLE IF NOT EXISTS `armes`(
  
 CREATE TABLE IF NOT EXISTS `inventaire`(
     id_heros int(11) PRIMARY KEY NOT NULL,
-    id_objet1 int(11),
-    id_objet2 int(11),
-    id_objet3 int(11),
-    id_objet4 int(11),
-    id_objet5 int(11),
-    id_objet6 int(11),
-    id_objet7 int(11),
-    id_objet8 int(11),
-    id_objet9 int(11),
-    id_objet10 int(11),
-    id_arme1 int(11),
-    id_arme2 int(11),
-    id_arme3 int(11)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+    carte_des int(11) DEFAULT 0,
+    carte_faces int(11) DEFAULT 0,
+    carte_multiplicateur float DEFAULT 1)
+    ENGINE=InnoDB DEFAULT CHARSET=utf8;
   
  
 --

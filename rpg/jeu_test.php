@@ -15,7 +15,7 @@
 
         session_start();
 
-        $_SESSION['id_pseudo'] = $_GET['link'];
+        $_SESSION['id_pseudo'] = (int)$_GET['link'];
 
         try{
             $bdd = new PDO('mysql:host=localhost;dbname=rpg', 'root', ''); // connexion à la bdd
@@ -37,7 +37,7 @@
 
         echo "hydratation done";
         echo $heros->getName();
-        echo " __ ", $heros->getHP(),;
+        echo " __ ", $heros->getHP();
         echo " __ ", $heros->getAttPts();
 
     ?>

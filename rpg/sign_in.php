@@ -30,7 +30,7 @@ function sign_in(){
 
     //préparation requête
     $sql = "INSERT INTO connexion(pseudo, mdp)
-            VALUES (:pseudo ,MD5(:mdp))";
+            VALUES (:pseudo ,SHA1(:mdp))";
 
     //exécution requête
     $bdd->prepare($sql)->execute($data);
@@ -58,12 +58,18 @@ function verification(){ //vérifie les doublons
     
     //comparaison
     $here = FALSE;
+
     $pseudo = $reponse->fetch();
 
-    if (in_array($_POST['pseudo'], $pseudo, true) == true ) {
-        $here = TRUE;
-    }
+    if ($pseudo != FALSE) { #si le pseudo est faux (donc il n'y a rien)
 
+        if (in_array($_POST['pseudo'], $pseudo, true) == true ) {
+            $here = TRUE;
+        }
+    }
+    else {
+        $here = FALSE;
+    }
 
     if ($here == TRUE){
         echo "<script> alert ('Veuillez réessayer un autre identifiant, celui-ci est dejà utilisé ...') </script>"; // Alerte que vous avez pris un identifiant déjà existant
@@ -72,7 +78,6 @@ function verification(){ //vérifie les doublons
         sign_in(); // si erreur
     }
 }
-
 
 
 
