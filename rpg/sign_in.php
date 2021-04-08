@@ -34,7 +34,11 @@ function sign_in(){
 
     //exécution requête
     $bdd->prepare($sql)->execute($data);
-    header('Location: menu_main.php'); //redirection
+
+    echo "<script>let message = confirm('Votre compte a bien été créé !')</script>";
+    echo "<script> alert(message) </script>";
+
+    header('Location: menu_main.php'); //redirection*
 }
 
 
@@ -52,16 +56,14 @@ function verification(){ //vérifie les doublons
     }
 
     // lancement de la requête
-    $reponse = $bdd->query('SELECT pseudo, mdp
+    $reponse = $bdd->query('SELECT pseudo ,mdp
                             FROM connexion
                             WHERE pseudo ="'.$_POST['pseudo'].'"');
     
     //comparaison
     $here = FALSE;
-
     $pseudo = $reponse->fetch();
-
-    if ($pseudo != FALSE) { #si le pseudo est faux (donc il n'y a rien)
+    if ($pseudo != FALSE) {
 
         if (in_array($_POST['pseudo'], $pseudo, true) == true ) {
             $here = TRUE;
@@ -77,7 +79,9 @@ function verification(){ //vérifie les doublons
     else{
         sign_in(); // si erreur
     }
+
 }
+
 
 
 
@@ -93,6 +97,7 @@ if (isset($_POST['pseudo']) && isset($_POST['mdp'])) {
         <p class="text_formualire">Votre Mot de passe : <input type="text" name="mdp" /></p>
         <p><input class="bouton" type="submit" value="Sign In"></p>
     </form>
+    <a href="menu_main.php"> <input class="bouton" type="button" value="Retour au menu principal"> </a>
 
 
 		
