@@ -188,46 +188,82 @@ class heros{
     // FONCRIONS DE BASE DU JOUEUR
 
     // Permet au joueur d'attaquer 
-    function attaquer($ennemi){
 
-        $chiffre = rand(1,$this->getFaces()); #sera le nombre 
-        $ratio = $chiffre; //on stock le chiffre tiré
+    function find_carte($chiffre){
 
         //calcul position image
         $ligne = 0;
         $colonne = 0;
+
         //le jeu étant un set de carte, on indique la carte a affiché par sa position
 
         if ($chiffre < 10){
+
             $colonne = $chiffre-1;
+
         }//si le chiffre est dans la première ligne, on a juste a trouvé sa colonne. il y a 10 cartes, il y a une position 0, les positions varient de 0->9
 
         else{//si la carte n'est pas dans la première ligne
-            while ($chiffre-10 > 0) {//tant qu'on peut retiré dix
+
+            while ($chiffre-10 >= 0) {//tant qu'on peut retiré dix
+
                     $chiffre -= 10;
                     $ligne += 1;//on augmente la ligne
-                if ($chiffre == 0){//si on atteint 0, c'est que la carte est un multiple de dix, hors, ils sont en bout de ligne
+
+                if ($chiffre == 0){//si on atteint 0, c'est que la carte est un multiple de dix, or ils sont en bout de ligne
+
                     $colonne = 9;//on revient alors à la case précédente
                     $ligne -=1;
                 }
+
                 else{//si on est en dessous de 10, mais supérieur à 0, on associe le chiffre à la position (variant de 0->9)
+
                     $colonne = $chiffre-1;
                 }
             
             }   
         }
-        $_SESSION['ligne']=$ligne;
-        $_SESSION['colonne']=$colonne;
-        
 
-        echo "</br><img src='image_carte.php' alt='carte'/></br>"; //fais appel à la page image_carte
-        
+        return $ligne.$colonne;
+    }
+    function attaquer($ennemi){
+
+    $degats = 0;
+
+    for ($i=0; $i < $this->getDice(); $i++) { 
+
+    $chiffre = rand(1,$this->getFaces()); #sera le nombre 
+
+        echo "chiffre tiré = ".$chiffre;
+
+        $_SESSION['ligne']=$this->find_carte($chiffre)[0];
+        $_SESSION['colonne']=$this->find_carte($chiffre)[1];
+
+        ${'image'.$i} = "</br><img src='image_carte.php'/></br>"; //fais appel à la page image_carte
+        echo ${'image'.$i};
 
         //ratio chiffre, dégats (plus on s'approche de 1, plus on fait mal, si = 1 -> coup critique (dégats *2 ?) )
         echo $this->_nom." as attaqué ".$ennemi->getName()."!";
-        $ennemi->setHP(-($this->_att_base));
-        echo $ennemi->getHP();
+
+        if ($chiffre == 1){
+
+            $degats += $this->_att_base *2 ;
+
+        }
+
+        else{
+
+        $pourcentage = 100 - 2 * $chiffre;
+
+        $degats += $this->_att_base*($pourcentage/100); // addition des degats
+
+        }
     
+    }
+
+        $ennemi->setHP(-($degats));
+        echo "vous avez fait ".$degats; //affichage
+
     }
 
     // Permet au joueur de dormir 
