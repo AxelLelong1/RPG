@@ -103,7 +103,8 @@ CREATE TABLE IF NOT EXISTS `ennemi`(
     min_drop_gold int(11),
     max_drop_gold int(11),
     min_drop_xp int(11),
-    max_drop_xp int(11)
+    max_drop_xp int(11),
+    sprite VARCHAR(255)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
  
  

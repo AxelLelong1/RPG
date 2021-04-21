@@ -96,7 +96,7 @@
         <p>Nombre de Mana : <input type="number" name="mana" /></p>
         <p>Points d'attaque : <input type="number" name="att" /></p>
         <p>Points de défense : <input type="number" name="def" /></p>
-        <p><input type="submit" value="ok"></p>
+        <p><input class="bouton"  type="submit" value="ok"></p>
     </form>
 
 	</body>

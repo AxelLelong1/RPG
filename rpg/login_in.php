@@ -51,6 +51,8 @@ function login(){ //fonction de login
     if ($here == TRUE){
 
         session_start(); // création d'une session (permet de partager les données de page en page)
+        $_SESSION['first_run'] = 0;
+        $_SESSION['ennemi'] = null;
 
         $_SESSION['pseudo'] = $_POST['pseudo']; // nom du pseudo est gardé
 
@@ -84,8 +86,9 @@ if (isset($_POST['pseudo']) && isset($_POST['mdp'])) { //vérif des datas
     <form method="post">
         <p class="text_formualire">Votre Pseudo : <input type="text" name="pseudo" /></p>
         <p class="text_formualire">Votre Mot de passe : <input type="text" name="mdp" /></p>
-        <p><input class="bouton" type="submit" value="Login In"></p>
+        <p><input class="bouton" type="submit" value="Log In"></p>
     </form>
+    <a href="menu_main.php"> <input class="bouton" type="button" value="Retour au menu principal"> </a>
 
 
 		

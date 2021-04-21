@@ -1,5 +1,7 @@
 <?php
+
 class heros{
+    private $_id;
     private $_nom;
     private $_xp;
     private $_hp;
@@ -10,6 +12,9 @@ class heros{
     private $_def_base;
     private $_def_pts;
     private $_arme_principale;
+    private $_des;
+    private $_faces;
+    private $_multiplicateur;
 
     // Lors de la construction d'un perso les stats seront celles de base, le joueur ne pourra que choisir son pseudo 
     function __construct(array $donnees)
@@ -18,6 +23,9 @@ class heros{
         {
           $this->hydrate($donnees);
         } 
+    
+    $this->updateDice();
+    
 
     }
 
@@ -33,12 +41,32 @@ class heros{
                         $this->$methode($donnee); 
                     }
         }
+    
     } 
 
     
     
     // FONCTIONS PERMETTANT DE MODIFIER LES DONNES DU JOUEUR 
     // FONCTIONS "GET"
+    public function getDice(){
+        $this->updateDice();
+        return $this->_des;
+    }
+
+    public function getFaces(){
+        $this->updateDice();
+        return $this->_faces;
+    }
+
+    public function getMult(){
+        $this->updateDice();
+        return $this->_multiplicateur;
+    }
+
+    public function getID(){
+        return $this->_id;
+    }
+
     public function getName(){
         return $this->_nom;
     }
@@ -72,6 +100,11 @@ class heros{
     }
     
     // FONCTIONS "SET"
+
+    public function setid_heros($id){
+        $this->_id = $id;
+    }
+
     public function setnom($nom){
         $this->_nom = $nom;
     }
@@ -121,15 +154,80 @@ class heros{
         $this->_def_pts = $this->getDefBase() + $gain_pts_def;
     }
 
+    public function updateDice(){
+        try{
+            $bdd = new PDO('mysql:host=localhost;dbname=rpg', 'root', ''); // connexion à la bdd
+        }
+        
+        catch(Exception $e)
+        {
+            die('Erreur : '.$e->getMessage());
+        }
+    
+        $reponse = $bdd->query('SELECT *
+                                FROM inventaire
+                                WHERE id_heros = '.$this->getID().'');
+    
+        $inventaireStuff = ($reponse->fetch());
+    
+        $this->setDice($inventaireStuff['carte_des'],$inventaireStuff['carte_faces'],$inventaireStuff['carte_multiplicateur']);
+
+    }
+
+    public function setDice($nombre, $faces, $multiplicateur){
+
+        $this->_des = (1+$nombre);
+        $this->_faces = (50-$faces);
+        $this->multiplicateur = ($multiplicateur);
+
+    }
+
 
     
     
     // FONCRIONS DE BASE DU JOUEUR
+
     // Permet au joueur d'attaquer 
     function attaquer($ennemi){
+
+        $chiffre = rand(1,$this->getFaces()); #sera le nombre 
+        $ratio = $chiffre; //on stock le chiffre tiré
+
+        //calcul position image
+        $ligne = 0;
+        $colonne = 0;
+        //le jeu étant un set de carte, on indique la carte a affiché par sa position
+
+        if ($chiffre < 10){
+            $colonne = $chiffre-1;
+        }//si le chiffre est dans la première ligne, on a juste a trouvé sa colonne. il y a 10 cartes, il y a une position 0, les positions varient de 0->9
+
+        else{//si la carte n'est pas dans la première ligne
+            while ($chiffre-10 > 0) {//tant qu'on peut retiré dix
+                    $chiffre -= 10;
+                    $ligne += 1;//on augmente la ligne
+                if ($chiffre == 0){//si on atteint 0, c'est que la carte est un multiple de dix, hors, ils sont en bout de ligne
+                    $colonne = 9;//on revient alors à la case précédente
+                    $ligne -=1;
+                }
+                else{//si on est en dessous de 10, mais supérieur à 0, on associe le chiffre à la position (variant de 0->9)
+                    $colonne = $chiffre-1;
+                }
+            
+            }   
+        }
+        $_SESSION['ligne']=$ligne;
+        $_SESSION['colonne']=$colonne;
+        
+
+        echo "</br><img src='image_carte.php' alt='carte'/></br>"; //fais appel à la page image_carte
+        
+
+        //ratio chiffre, dégats (plus on s'approche de 1, plus on fait mal, si = 1 -> coup critique (dégats *2 ?) )
         echo $this->_nom." as attaqué ".$ennemi->getName()."!";
         $ennemi->setHP(-($this->_att_base));
         echo $ennemi->getHP();
+    
     }
 
     // Permet au joueur de dormir 

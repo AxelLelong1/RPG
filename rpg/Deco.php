@@ -17,8 +17,8 @@
 
     session_destroy(); //fin de la session
 
-    echo "vous êtes bien déconnecté !";
-    echo "<a href='menu_main.php'> Retour au menu </a>";
+    echo "Vous êtes bien déconnecté !";
+    echo '</br><a href="menu_main.php"> <input class="bouton" type="button" value="Retour au menu principal"> </a>';
 
     ?>
 

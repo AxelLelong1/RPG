@@ -24,27 +24,26 @@
         }
         
         // récup des perso
-        $reponse = $bdd->query('SELECT heros.nom, id_heros
+        $reponse = $bdd->query('SELECT heros.nom, heros.id_heros
         FROM heros
         INNER JOIN connexion
         ON heros.id_pseudo = connexion.id
-        WHERE id_pseudo = '.$_SESSION["id"].'');            
+        WHERE id_pseudo = '.$_SESSION["id"].'');
 
-            echo "<table>";
+    
+        echo "<table>";
 
-            while($perso = $reponse->fetch()){
+        while($perso = $reponse->fetch()){
 
-                //boucle pour tableau
-                echo '<tr><td><a href="jeu_test.php?link='.urlencode($perso["id_heros"]).'">'.$perso["nom"].'</a></tr></td>';
-            }
+            //boucle pour tableau
+            echo '</br><a class="lien" href="jeu.php?link='.$perso['id_heros'].'"> <input class="bouton" type="button" value='.$perso["nom"].'> </a>';
+        }
 
-            echo "</table>";
+        echo "</table>";
 
-            //créer son perso
-            echo "</br> <a href='creation_perso.php'>Créer votre perso</a>";
-
+        //créer son perso
+        echo '<a href="creation_perso.php"><input class="bouton" type="button" value="Créer votre perso"></a>';
         
-
     }
 
 
@@ -54,10 +53,12 @@
     // On vérifie si la session n'est pas nulle pour afficher les infromations du joueur 
     if (isset($_SESSION['pseudo']) && isset($_SESSION['mdp']) && isset($_SESSION['id'])) { // Si la session est pas nulle...
 
-        echo 'Votre login est '.$_SESSION['pseudo'].' et votre mot de passe est '.$_SESSION['mdp'].' et votre id est'.$_SESSION['id'].'.'; // ... on peut voir nos infos (pseudo, mot de passe, l'id dans la base de données)
-        echo '<a href="Deco.php">Deconnexion</a>';
+        echo 'Votre login est '.$_SESSION['pseudo'].' et votre mot de passe est '.$_SESSION['mdp'].' et votre id est '.$_SESSION['id'].'.'; // ... on peut voir nos infos (pseudo, mot de passe, l'id dans la base de données)
+        echo '</br><a href="deco.php"><input class="bouton" type="button" value="Deconnexion"></a>';
 
-        echo "</br> voici vos perso !";
+        echo "</br> Voici vos perso !";
+        $_SESSION['first_run'] = 0;
+        $_SESSION['ennemi'] = null;
         
         // Présentation des persos
         recup_perso(); // Fonction du desssus 

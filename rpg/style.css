@@ -1,8 +1,11 @@
+* JavaScript */
 canvas {
     border: 1px solid black;
 }
 
-.text_formualire{
+
+/* Style de toutes les pages du RPG */
+html{
     font-family: 'Courier New', Courier, monospace;
     letter-spacing: 0.5px;
 }
