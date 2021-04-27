@@ -232,18 +232,19 @@ class heros{
 
     for ($i=0; $i < $this->getDice(); $i++) { 
 
+    $_SESSION['boucle'] = $i;
     $chiffre = rand(1,$this->getFaces()); #sera le nombre 
 
         echo "chiffre tiré = ".$chiffre;
 
-        $_SESSION['ligne']=$this->find_carte($chiffre)[0];
-        $_SESSION['colonne']=$this->find_carte($chiffre)[1];
+        $ligne=$this->find_carte($chiffre)[0];
+        $colonne=$this->find_carte($chiffre)[1];
 
-        ${'image'.$i} = "</br><img src='image_carte.php'/></br>"; //fais appel à la page image_carte
+
+        ${'image'.$i} = "</br><img src='image_carte.php?colonne=".$colonne."&ligne=".$ligne."'alt='carte".$i."'/></br>"; //fais appel à la page image_carte
         echo ${'image'.$i};
-
+        
         //ratio chiffre, dégats (plus on s'approche de 1, plus on fait mal, si = 1 -> coup critique (dégats *2 ?) )
-        echo $this->_nom." as attaqué ".$ennemi->getName()."!";
 
         if ($chiffre == 1){
 
