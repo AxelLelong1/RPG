@@ -16,7 +16,7 @@
 
     if (isset($_SESSION['pseudo']) && isset($_SESSION['mdp']) && isset($_SESSION['id'])) {
 
-        if (isset($_POST['nom']) && isset($_POST['hp']) && isset($_POST['mana']) && isset($_POST['att']) && isset($_POST['def']) ) {
+        if (isset($_POST['nom']) && isset($_POST['hp_max']) && isset($_POST['mana']) && isset($_POST['att']) && isset($_POST['def']) ) {
 
             verif();
         }
@@ -36,7 +36,8 @@
 
         $idpseudo = $_SESSION['id'];
         $nom = $_POST['nom'];
-        $hp = $_POST['hp'];
+        $hp_max = $_POST['hp_max'];
+        $hp = $_POST['hp_max'];
         $mana = $_POST['mana'];
         $att_base = $_POST['att'];
         $def_base = $_POST['def'];
@@ -47,8 +48,8 @@
 
         //requête
 
-        $sql = "INSERT INTO heros(id_pseudo, nom, hp, mana, att_base, def_base, xp, lvl, att_pts, def_pts)
-                VALUES('".$idpseudo."','".$nom."','".$hp."','".$mana."','".$att_base."','".$def_base."','".$xp."','".$lvl."','".$att_pts."','".$def_pts."')";
+        $sql = "INSERT INTO heros(id_pseudo, nom, hp, hp_max, mana, att_base, def_base, xp, lvl, att_pts, def_pts)
+                VALUES('".$idpseudo."','".$nom."','".$hp."','".$hp_max."','".$mana."','".$att_base."','".$def_base."','".$xp."','".$lvl."','".$att_pts."','".$def_pts."')";
 
 
         //préparation puis execution (execution seule marche pas, obligation de préparer)
@@ -72,7 +73,7 @@
 
 
         //vérification des 200 points attribuer
-        if ($_POST['hp'] + $_POST['mana'] + $_POST['att'] + $_POST['def'] != 200){
+        if ($_POST['hp_max'] + $_POST['mana'] + $_POST['att'] + $_POST['def'] != 200){
             echo '<script>alert("vous avez 200 points à attribuer !")</script>';
         }
         else{
@@ -92,7 +93,7 @@
 
     <form method="post">
         <p>Son nom ? : <input type="text" name="nom" /></p>
-        <p>Nombre de HP : <input type="number" name="hp" /></p>
+        <p>Nombre de HP : <input type="number" name="hp_max" /></p>
         <p>Nombre de Mana : <input type="number" name="mana" /></p>
         <p>Points d'attaque : <input type="number" name="att" /></p>
         <p>Points de défense : <input type="number" name="def" /></p>

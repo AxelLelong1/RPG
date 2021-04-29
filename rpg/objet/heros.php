@@ -4,6 +4,7 @@ class heros{
     private $_id;
     private $_nom;
     private $_xp;
+    private $_hp_max;
     private $_hp;
     private $_lvl;
     private $_mana;
@@ -79,6 +80,14 @@ class heros{
         return $this->_hp;
     }
 
+    public function getHPmax(){
+        return $this->_hp_max;
+    }
+
+    public function getmana(){
+        return $this->_mana;
+    }
+
     public function getLVL(){
         return $this->_lvl;
     }
@@ -116,6 +125,10 @@ class heros{
     // Permetra de modifier si le joueur ce fait attaquer ou s il se soigne par exemple
     public function sethp($gain_hp){ 
         $this->_hp += $gain_hp;
+    }
+
+    public function sethp_max($gain_hp_max){ 
+        $this->_hp_max += $gain_hp_max;
     }
 
     // Permettra d augmenter le niveau du joueur 
@@ -263,7 +276,7 @@ class heros{
     }
 
         $ennemi->setHP(-($degats));
-        echo "vous avez fait ".$degats; //affichage
+        echo "vous avez fait ".$degats." degats"; //affichage
 
     }
 

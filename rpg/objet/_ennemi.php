@@ -45,7 +45,11 @@ class ennemi{
 
     }
     function attaquer($ennemi){
-        $ennemi->hp -= ($this->att_pts);
+        $chiffre = rand(0,2); #sera le nombre 
+        $ratio = $chiffre/2;
+        $degats = round((($this->_att_pts)*$ratio),0,PHP_ROUND_HALF_DOWN);
+        $ennemi->sethp(-($degats));
+        echo"Vous avez subit ".($degats)." degats";
     }
 
     // FONCTIONS

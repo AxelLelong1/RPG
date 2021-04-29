@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS`heros`(
     xp int(11),
     lvl int(11),
     hp int(11),
+    hp_max int(11),
     mana int(11),
     att_base int(11),
     att_pts int(11),

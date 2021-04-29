@@ -85,7 +85,7 @@ if (isset($_POST['pseudo']) && isset($_POST['mdp'])) { //vérif des datas
 
     <form method="post">
         <p class="text_formualire">Votre Pseudo : <input type="text" name="pseudo" /></p>
-        <p class="text_formualire">Votre Mot de passe : <input type="text" name="mdp" /></p>
+        <p class="text_formualire">Votre Mot de passe : <input type="password" name="mdp" /></p>
         <p><input class="bouton" type="submit" value="Log In"></p>
     </form>
     <a href="menu_main.php"> <input class="bouton" type="button" value="Retour au menu principal"> </a>

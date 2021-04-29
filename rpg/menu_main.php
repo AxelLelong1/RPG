@@ -53,15 +53,17 @@
     // On vérifie si la session n'est pas nulle pour afficher les infromations du joueur 
     if (isset($_SESSION['pseudo']) && isset($_SESSION['mdp']) && isset($_SESSION['id'])) { // Si la session est pas nulle...
 
-        echo 'Votre login est '.$_SESSION['pseudo'].' et votre mot de passe est '.$_SESSION['mdp'].' et votre id est '.$_SESSION['id'].'.'; // ... on peut voir nos infos (pseudo, mot de passe, l'id dans la base de données)
-        echo '</br><a href="deco.php"><input class="bouton" type="button" value="Deconnexion"></a>';
+        echo 'Bienvenue '.$_SESSION['pseudo']; // ... on peut voir nos infos (pseudo, mot de passe, l'id dans la base de données)
+        
 
         echo "</br> Voici vos perso !";
         $_SESSION['first_run'] = 0;
         $_SESSION['ennemi'] = null;
+        $_SESSION['heros'] = null;
         
         // Présentation des persos
         recup_perso(); // Fonction du desssus 
+        echo '</br><a href="deco.php"><input class="bouton" type="button" value="Deconnexion"></a>';
 
 
 
@@ -71,7 +73,9 @@
 
         echo '<a class="lien" href="login_in.php"> <input class="bouton" type="button" value="Log In"> </a>' ; // On propose de le login 
         echo '<a class="lien" href="sign_in.php"> <input class="bouton" type="button" value="Sign In"> </a>' ; // et le sign_in 
-    }   
+    }
+
+    
     ?>
 
 	</body>
